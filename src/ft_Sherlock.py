@@ -15,6 +15,11 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
 		return {"site": site_name, "Found": False, "error": "timeout or dns error :("}
 
 async def site_scanner(username: str, sites_dict: Dict[str, Any]):
-    print(f"[*] - Searching an account with the Username : '{username}' on {len(sites_dict)} sites")
-    async with httpx.AsyncClient as client:
-        
+	print(f"[*] - Searching an account with the Username : '{username}' on {len(sites_dict)} sites")
+	async with httpx.AsyncClient as client:
+		tasks = []
+		for site_name, site_data in sites_dict.items:
+			task = site_checker(client, site_name, site_data, username)
+			tasks.append(task)
+		results = await asyncio.gather(*tasks)
+	return results
