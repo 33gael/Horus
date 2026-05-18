@@ -34,7 +34,6 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
             return {"site": site_name, "Found": True, "url": url}
         else:
             return {"site": site_name, "Found": False, "url": url}
-            
     except httpx.RequestError:
         return {"site": site_name, "Found": False, "error": "timeout or dns error"}
 

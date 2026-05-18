@@ -12,7 +12,7 @@ BANNER = r"""
 |  _| __|         \___ \| '_ \ / _ \ '__| |/ _ \ / __| |/ /
 | | | |_  ______  ____) | | | |  __/ |  | | (_) | (__|   < 
 |_|  \__||______||_____/|_| |_|\___|_|  |_|\___/ \___|_|\_\
-[italic white]                                                           v0.1[/italic white][/bold cyan]
+[italic white]                                                           v0.2[/italic white][/bold cyan]
 """
 
 if __name__ == "__main__":
