@@ -16,7 +16,6 @@ async def ft_twitter(site_name: str, url: str):
         )
         await context.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         page = await context.new_page()
-        
         try:
             await page.goto(url, wait_until="domcontentloaded", timeout=20000)
             await page.wait_for_timeout(2000)
