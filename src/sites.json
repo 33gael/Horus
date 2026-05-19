@@ -1,6 +1,5 @@
 {
     "X": "https://x.com/{username}",
-    "Twitter": "https://twitter.com/{username}",
     "Instagram": "https://instagram.com/{username}",
     "Facebook": "https://facebook.com/{username}",
     "TikTok": "https://tiktok.com/@{username}",

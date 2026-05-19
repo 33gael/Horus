@@ -69,7 +69,7 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
         }
         if site_name == "Instagram":
             return await ft_instagram(client_name, site_name, url, username)
-        if site_name == "X" or site_name == "Twitter":
+        if site_name == "X":
             return await ft_twitter(site_name, url)
         response = await client_name.get(url, headers=headers, timeout=10.0, follow_redirects=True)
         if response.status_code == 200:
