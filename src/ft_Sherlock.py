@@ -103,7 +103,7 @@ async def ft_tiktok(site_name: str, url: str):
             if response and response.status == 404:
                 return {"site": site_name, "Found": False, "url": url}
                 
-            return {"site": site_name, "Found": False, "error": "Blocked or empty page"}
+            return {"site": site_name, "Found": False, "error": "Blocked or empty page, please retry"}
                 
         except Exception as e:
             await browser.close()
