@@ -1,6 +1,6 @@
 import asyncio
 import httpx
-from typing import Dict, Any
+from typing import Dict
 from playwright.async_api import async_playwright
 
 async def ft_twitter(site_name: str, url: str):
