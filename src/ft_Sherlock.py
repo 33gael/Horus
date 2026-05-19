@@ -2,6 +2,8 @@ import asyncio
 import httpx
 from typing import Dict
 from playwright.async_api import async_playwright
+from bs4 import BeautifulSoup
+import requests
 
 async def ft_twitter(site_name: str, url: str):
     async with async_playwright() as pw:
@@ -35,6 +37,13 @@ async def ft_twitter(site_name: str, url: str):
         except Exception as e:
             await browser.close()
             return {"site": site_name, "Found": False, "error": f"Timeout/Error: {str(e)[:40]}"}
+
+async def ft_steam(site_name: str, url: str):
+    HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+    
+    response = requests.get(url, headers=HEADERS)
+    scrapper = BeautifulSoup(response.text, "html.parser")
+    title = scrapper.find("title", )
 
 async def ft_instagram(client_name: httpx.AsyncClient, site_name: str, url: str, username: str):
     headers = {
