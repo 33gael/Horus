@@ -11,7 +11,6 @@
     "Mastodon": "https://mastodon.social/@{username}",
     "Snapchat": "https://snapchat.com/add/{username}",
     "VK": "https://vk.com/{username}",
-    "Weibo": "https://weibo.com/{username}",
     "Github": "https://github.com/{username}",
     "GitLab": "https://gitlab.com/{username}",
     "BitBucket": "https://bitbucket.org/{username}/",

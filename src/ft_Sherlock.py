@@ -60,6 +60,55 @@ async def ft_instagram(client_name: httpx.AsyncClient, site_name: str, url: str,
     else:
         return {"site": site_name, "Found": False, "error": f"API error {response.status_code}"}
 
+async def ft_tiktok(site_name: str, url: str):
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled"]
+        )
+        context = await browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            locale="en-US",
+            viewport={"width": 1920, "height": 1080}
+        )
+        
+        await context.add_init_script("""
+            Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+            window.chrome = { runtime: {} };
+            Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3]});
+            Object.defineProperty(navigator, 'languages', {get: () => ['en-US', 'en']});
+        """)
+        
+        page = await context.new_page()
+        
+        try:
+            response = await page.goto(url, wait_until="domcontentloaded", timeout=20000)
+            await page.wait_for_timeout(3500)
+            
+            content = await page.content()
+            title = await page.title()
+            current_url = page.url
+            
+            await browser.close()
+            
+            if "Verify to continue" in title or "captcha" in current_url.lower():
+                return {"site": site_name, "Found": False, "error": "Blocked by TikTok Captcha"}
+                
+            if 'data-e2e="user-title"' in content or 'data-e2e="user-subtitle"' in content:
+                return {"site": site_name, "Found": True, "url": url}
+                
+            if "Couldn't find this account" in content or "Compte introuvable" in content:
+                return {"site": site_name, "Found": False, "url": url}
+                
+            if response and response.status == 404:
+                return {"site": site_name, "Found": False, "url": url}
+                
+            return {"site": site_name, "Found": False, "error": "Blocked or empty page"}
+                
+        except Exception as e:
+            await browser.close()
+            return {"site": site_name, "Found": False, "error": f"Timeout/Error: {str(e)[:40]}"}
+
 async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data: str, username: str):
     url = site_data.replace("{username}", username)
     try:
@@ -70,6 +119,8 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
             return await ft_instagram(client_name, site_name, url, username)
         if site_name == "X":
             return await ft_twitter(site_name, url)
+        if site_name == "Tiktok":
+            return await ft_tiktok(site_name, url)
         response = await client_name.get(url, headers=headers, timeout=10.0, follow_redirects=True)
         if response.status_code == 200:
             return {"site": site_name, "Found": True, "url": url}

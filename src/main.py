@@ -31,8 +31,8 @@ if __name__ == "__main__":
             if res.get("Found"):
                 console.print(f"[bold dark_green][+] - Username found in {res['site']} : {res['url']}[/bold dark_green]")
             elif "error" in res:
-                console.print(f"[bold dark_red][!] - Error in {res['site']} : {res['error']}[/bold dark_red]")
+                console.print(f"[bold purple][!] - Error in {res['site']} : {res['error']}[/bold purple]")
             else:
-                console.print(f"[bold dark_orange][-] - Error: username not found in {res['site']}[/bold dark_orange]")
+                console.print(f"[bold yellow][-] - Error: username not found in {res['site']}[/bold yellow]")
     else:
         console.print(f"[bold red][X] - Please enter a valid username[/bold red]")
