@@ -6,6 +6,7 @@ from social_media.Twitter import ft_twitter
 from social_media.Tiktok import ft_tiktok
 from social_media.Instagram import ft_instagram
 from social_media.Steam import ft_steam
+from social_media.Hackerrank import ft_hackerrank
 
 async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data: str, username: str):
     url = site_data.replace("{username}", username)
@@ -22,6 +23,8 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
             return await ft_tiktok(site_name, url)
         if site_name == "Steam":
             return await ft_steam(client_name, site_name, url)
+        if site_name == "HackerRank":
+            return await ft_hackerrank(client_name, site_name, url, username)
 
         response = await client_name.get(url, headers=headers, timeout=10.0, follow_redirects=True)
         if response.status_code == 200:
