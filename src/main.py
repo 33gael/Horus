@@ -1,4 +1,4 @@
-from ft_Sherlock import site_scanner
+from Horus import site_scanner
 import json
 import asyncio
 from pathlib import Path
