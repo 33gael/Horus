@@ -10,6 +10,7 @@ from social_media.Hackerrank import ft_hackerrank
 from social_media.YouTube import ft_youtube
 from social_media.Twitch import ft_twitch
 from social_media.Reddit import ft_reddit
+from social_media.Xbox import ft_xbox
 
 async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data: str, username: str):
     url = site_data.replace("{username}", username)
@@ -34,6 +35,8 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
             return await ft_twitch(client_name, site_name, url)
         if site_name == "Reddit":
             return await ft_reddit(client_name, site_name, url)
+        if site_name == "Xbox":
+            return await ft_xbox(client_name, site_name, url)
 
         response = await client_name.get(url, headers=headers, timeout=10.0, follow_redirects=True)
         if response.status_code == 200:
