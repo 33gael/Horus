@@ -54,7 +54,7 @@ if __name__ == "__main__":
     console = Console()
     try:
         console.print(BANNER, crop=False, overflow="ignore")
-        console.print("[bold blue]-[/]" * 65)
+        console.print("[bold blue]-[/]" * 75)
         dir = Path(__file__).parent
         file_path = dir / "sites.json"
         with open(file_path, "r") as f:
