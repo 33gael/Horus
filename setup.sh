@@ -38,7 +38,10 @@ else
     echo "[+] Alias 'horus' successfully added to $SHELL_RC!"
 fi
 
+source venv/bin/activate
+playwright install-deps chromium
+
 echo -e "\n[+] Installation completed successfully!"
 echo -e "[!] IMPORTANT: To activate the alias immediately in this terminal, run:"
-echo -e "source $SHELL_RC\n"
+echo -e "source ~/.zshrc or ~/.bashrc\n"
 echo -e "After doing this, you can launch the tool from anywhere by typing: horus"
