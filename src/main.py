@@ -36,7 +36,7 @@ BANNER = r"""
 .'xxO0kxdddx00000xoo,d,:...                  .:dO00o:...           
 ...,lddoolllc:,':'.,...                      .,odO0dl.               
       ............ ...                        ..lkkk.                 
-[/bold dark_yellow]
+[/]
 """
 
 def get_valid_username(console: Console) -> str:
@@ -44,34 +44,33 @@ def get_valid_username(console: Console) -> str:
         raw_username = console.input("[bold cyan][?] - Enter the username you want to search : [/]")
         clean_username = re.sub(r'[^a-zA-Z0-9_\-.]', '', raw_username)
         if not clean_username:
-            console.print("[bold red][X] - Please enter a valid username (special characters alone are not allowed).[/bold red]")
+            console.print("[bold red][X] - Please enter a valid username (special characters alone are not allowed).[/]")
             continue
         if clean_username != raw_username:
-            console.print(f"[bold yellow][!] - Special characters ignored. Searching for : '{clean_username}'...[/bold yellow]")
+            console.print(f"[bold yellow][!] - Special characters ignored. Searching for : '{clean_username}'...[/]")
         return clean_username
 
 if __name__ == "__main__":
     console = Console()
     try:
         console.print(BANNER, crop=False, overflow="ignore")
-        console.print("[bold blue]-[/bold blue]" * 65)
+        console.print("[bold blue]-[/]" * 65)
         dir = Path(__file__).parent
         file_path = dir / "sites.json"
         with open(file_path, "r") as f:
             sites = json.load(f)
         username = get_valid_username(console)
         results = asyncio.run(site_scanner(username, sites))
-        console.print("\n[bold white]--- Scan Results ---[/bold white]\n")
 
         for res in results:
             if res is None:
                 continue
             if res.get("Found"):
-                console.print(f"[bold dark_green][+] - Username found in {res['site']} : {res['url']}[/bold dark_green]")
+                console.print(f"[bold dark_green][+] - Username found in [/][bold white]{res['site']} :[/] {res['url']}")
             elif "error" in res:
                 console.print(f"[bold purple][!] - Error in {res['site']} : {res['error']}[/bold purple]")
             else:
-                console.print(f"[bold yellow][-] - Error: username not found in {res['site']}[/bold yellow]")
+                console.print(f"[bold orange3][-] - Error: username not found in [/][bold white]{res['site']}[/]")
     except KeyboardInterrupt:
         console.print("\n[bold red][!] - Scan interrupted by user. Exiting Horus...[/bold red]")
         sys.exit(0)
