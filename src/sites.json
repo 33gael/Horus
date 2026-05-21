@@ -28,7 +28,7 @@
     "Pixabay": "https://pixabay.com/users/{username}",
     "SoundCloud": "https://soundcloud.com/{username}",
     "Unsplash": "https://unsplash.com/@{username}",
-    "Spotify": "https://open.spotify.com/user/${username}",
+    "Spotify": "https://open.spotify.com/user/{username}",
     "Mixcloud": "https://mixcloud.com/{username}",
     "Last.fm": "https://last.fm/user/{username}",
     "Steam": "https://steamcommunity.com/id/{username}",

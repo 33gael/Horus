@@ -15,6 +15,7 @@ from social_media.Playstation import ft_playstation
 from social_media.Roblox import ft_roblox
 from social_media.Chess import ft_chess
 from social_media.Pinterest import ft_pinterest
+from social_media.Spotify import ft_spotify
 
 async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data: str, username: str):
     url = site_data.replace("{username}", username)
@@ -49,7 +50,8 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
             return await ft_chess(client_name, site_name, url, username)
         if site_name == "Pinterest":
             return await ft_pinterest(client_name, site_name, url, username)
-
+        if site_name == "Spotify":
+            return await ft_spotify(client_name, site_name, url)
         response = await client_name.get(url, headers=headers, timeout=10.0, follow_redirects=True)
         if response.status_code == 200:
             return {"site": site_name, "Found": True, "url": url}
