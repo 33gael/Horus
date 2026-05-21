@@ -19,8 +19,8 @@ async def site_checker(client_name: httpx.AsyncClient, site_name: str, site_data
             return await ft_instagram(client_name, site_name, url, username)
         if site_name == "X":
             return await ft_twitter(site_name, url)
-        if site_name == "Tiktok":
-            return await ft_tiktok(site_name, url)
+        if site_name == "TikTok":
+            return await ft_tiktok(client_name, site_name, url, username)
         if site_name == "Steam":
             return await ft_steam(client_name, site_name, url)
         if site_name == "HackerRank":
