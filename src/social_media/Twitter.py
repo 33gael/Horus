@@ -22,7 +22,7 @@ async def ft_twitter(site_name: str, url: str):
             
             await browser.close()
             
-            if "login" in current_url or "Log in" in title or "Connexion" in title:
+            if "login" in current_url or "Log in" in title:
                 return {"site": site_name, "Found": False, "error": "Blocked by login wall/Captcha"}
             elif title == "Profile / X" or title == "X" or "Account suspended" in title:
                 return {"site": site_name, "Found": False, "url": url}

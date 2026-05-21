@@ -1,36 +1,42 @@
 from playwright.async_api import async_playwright
 
-async def ft_steam(client_name, site_name: str, url: str):
+async def ft_youtube(client_name, site_name: str, url: str):
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(
             headless=True,
-            args=["--disable-blink-features=AutomationControlled", "--ignore-certificate-errors"]
+            args=["--disable-blink-features=AutomationControlled"]
         )
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             locale="en-US",
-            viewport={"width": 1920, "height": 1080},
-            ignore_https_errors=True
-        )
-
+            viewport={"width": 1920, "height": 1080}
+        )        
+        await context.add_cookies([{
+            "name": "SOCS",
+            "value": "CAI",
+            "domain": ".youtube.com",
+            "path": "/"
+        }])
         await context.add_init_script("""
             Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
             window.chrome = { runtime: {} };
-            Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3]});
-            Object.defineProperty(navigator, 'languages', {get: () => ['en-US', 'en']});
         """)
-
         page = await context.new_page()
 
         try:
             response = await page.goto(url, wait_until="domcontentloaded", timeout=20000)
             await page.wait_for_timeout(2000)
+
             title = await page.title()
+            content = await page.content()
+            status = response.status if response else 200
+
             await browser.close()
-            if "Steam Community :: Error" in title:
+            if status == 404:
                 return {"site": site_name, "Found": False, "url": url}
-            else:
-                return {"site": site_name, "Found": True, "url": url}
+            if "404 Not Found" in title or "This page isn't available" in content:
+                return {"site": site_name, "Found": False, "url": url}
+            return {"site": site_name, "Found": True, "url": url}
 
         except Exception as e:
             await browser.close()
