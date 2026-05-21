@@ -21,7 +21,7 @@ playwright install chromium
 
 PROJECT_DIR=$(pwd)
 
-ALIAS_CMD="alias horus='$PROJECT_DIR/venv/bin/python $PROJECT_DIR/main.py'"
+ALIAS_CMD="alias horus='$PROJECT_DIR/venv/bin/python $PROJECT_DIR/src/main.py'"
 
 if [ -n "$ZSH_VERSION" ] || [ -f ~/.zshrc ]; then
     SHELL_RC="$HOME/.zshrc"
