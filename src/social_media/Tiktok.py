@@ -4,9 +4,7 @@ async def ft_tiktok(client_name: httpx.AsyncClient, site_name: str, url: str, us
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
-    
     api_url = f"https://www.tiktok.com/oembed?url=https://www.tiktok.com/@{username}"
-    
     try:
         response = await client_name.get(api_url, headers=headers, timeout=10.0, follow_redirects=True)
         
