@@ -66,7 +66,7 @@ if __name__ == "__main__":
             if res is None:
                 continue
             if res.get("Found"):
-                console.print(f"[bold dark_green][+] - Username found in [/][bold white]{res['site']} :[/] {res['url']}")
+                console.print(f"[bold dark_green][+] - Username found in [/][bold white]{res['site']} :[/] [link={res['url']}]{res['url']}[/link]")
             elif "error" in res:
                 console.print(f"[bold purple][!] - Error in {res['site']} : {res['error']}[/bold purple]")
             else:
