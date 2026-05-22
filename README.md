@@ -79,7 +79,7 @@ This command requires sudo privileges (you will be prompted for your Linux/WSL p
 ### 📁 Project Structure
 ```bash
 Horus/
-├── venv/(auto-generated)
+├── venv/ #auto-generated with setup.sh
 ├── setup.sh
 ├── src/
 │   ├── main.py
