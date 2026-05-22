@@ -29,7 +29,7 @@ Follow these steps to clone the project and configure your environment:
 ### 1. Clone the repository
 First, download the source code and navigate to the project directory:
 ```bash
-git clone <your-horus-repo-link>
+git clone https://github.com/33gael/Horus.git
 cd Horus
 ```
 
