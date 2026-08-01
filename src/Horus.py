@@ -23,7 +23,6 @@ from social_media.Chess import ft_chess
 from social_media.Pinterest import ft_pinterest
 from social_media.Spotify import ft_spotify
 
-# Sites that need a real browser tab on the shared Chromium instance.
 BROWSER_SITES = {"Steam", "Reddit", "Facebook", "Threads", "Xbox", "PlayStation", "Spotify"}
 
 async def site_checker(client_name: httpx.AsyncClient, browser, site_name: str, site_data: str, username: str):
@@ -70,8 +69,6 @@ async def site_checker(client_name: httpx.AsyncClient, browser, site_name: str, 
         if site_name == "Spotify":
             return await ft_spotify(browser, site_name, url)
 
-        # Wikimedia's robot policy requires bots to identify themselves with a
-        # descriptive User-Agent instead of a browser one.
         extra_headers = {}
         if site_name.startswith("Wikipedia"):
             extra_headers["User-Agent"] = "Horus-OSINT-Scanner/1.0 (https://github.com/33gael/Horus; username research tool)"
