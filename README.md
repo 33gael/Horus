@@ -6,9 +6,10 @@ Horus is an ultra-fast, fully asynchronous Open Source Intelligence (OSINT) tool
 
 ## 🚀 Key Features
 
-* ⚡ **Blazing Fast Performance**: Asynchronous deployment (`asyncio.gather`) allows scanning over 50 sites in less than 15 seconds.
-* 🧠 **Advanced Memory Optimization**: *Single-Browser Architecture* via Playwright. Heavy websites run concurrently in shared ephemeral tabs, preserving 100% of your RAM.
-* 🤖 **Built-in Anti-Bot Bypass**: Redundant mirror roulette system (Failover) for Twitter/X and Instagram to completely evade mandatory login walls, captchas, and fake `403` / `429` error codes.
+* ⚡ **Blazing Fast Performance**: Asynchronous deployment (`asyncio.gather`) allows scanning over 50 sites in seconds.
+* 🧠 **Advanced Memory Optimization**: true *Single-Browser Architecture* via Playwright. One shared Chromium instance is launched per scan; heavy websites run concurrently in ephemeral tabs, preserving your RAM.
+* 🤖 **Built-in Anti-Bot Resilience**: official/public API endpoints where possible (Instagram web API, fxtwitter for X, Roblox users API, TikTok oEmbed, decapi for Twitch), a stealth-hardened shared browser for the rest (Reddit, Facebook, Threads, Steam, Xbox, PSN, Spotify), and a browser User-Agent derived from the real Chromium build so the version never drifts out of sync.
+* 🎯 **Honest Detection**: anti-bot responses (`401` / `403` / `429`, Cloudflare challenges, authwalls, DNS filters) are reported as *blocked* instead of being silently misreported as "not found".
 * 🛡️ **Input Sanitization**: Native protection against special character injections `[](){}` during user input.
 * 🌍 **Cross-Platform & Global**: Installs and runs identically on **macOS**, **Linux**, and **Windows (via WSL)**.
 * 🎛️ **Global Alias**: Once installed, the tool can be executed from any directory on your machine with a single command.
@@ -86,15 +87,20 @@ Horus/
 │   ├── Horus.py
 │   ├── sites.json
 │   └── social_media/
+│       ├── utils.py
 │       ├── Chess.py
+│       ├── Facebook.py
 │       ├── Hackerrank.py
 │       ├── Instagram.py
+│       ├── Linkedin.py
+│       ├── Mixcloud.py
 │       ├── Pinterest.py
 │       ├── Playstation.py
 │       ├── Reddit.py
 │       ├── Roblox.py
 │       ├── Spotify.py
 │       ├── Steam.py
+│       ├── Threads.py
 │       ├── Tiktok.py
 │       ├── Twitch.py
 │       ├── Twitter.py

@@ -1,36 +1,18 @@
-from playwright.async_api import async_playwright
+import httpx
 
-async def ft_roblox(client_name, site_name: str, url: str):
-    async with async_playwright() as pw:
-        browser = await pw.chromium.launch(
-            headless=True,
-            args=["--disable-blink-features=AutomationControlled", "--ignore-certificate-errors"]
-        )
-        context = await browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            locale="en-US",
-            viewport={"width": 1920, "height": 1080},
-            ignore_https_errors=True
-        )
-        await context.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
-            window.chrome = { runtime: {} };
-        """)
-        page = await context.new_page()
-
-        try:
-            response = await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            await page.wait_for_timeout(2000)
-            final_url = page.url
-            title = await page.title()
-            status = response.status if response else 200
-            await browser.close()
-
-            if status == 404 or "search/users" in final_url.lower() or "not found" in title.lower():
-                return {"site": site_name, "Found": False, "url": url}
-            else:
-                return {"site": site_name, "Found": True, "url": final_url}
-
-        except Exception as e:
-            await browser.close()
-            return {"site": site_name, "Found": False, "error": f"Error: {str(e)[:40]}"}
+async def ft_roblox(client_name: httpx.AsyncClient, site_name: str, url: str, username: str):
+    api_url = "https://users.roblox.com/v1/usernames/users"
+    try:
+        response = await client_name.post(api_url, json={"usernames": [username], "excludeBannedUsers": False}, timeout=15.0)
+        if response.status_code == 200:
+            data = response.json().get("data", [])
+            if data:
+                user_id = data[0].get("id")
+                profile_url = f"https://www.roblox.com/users/{user_id}/profile" if user_id else url
+                return {"site": site_name, "Found": True, "url": profile_url}
+            return {"site": site_name, "Found": False, "url": url}
+        if response.status_code == 429:
+            return {"site": site_name, "Found": False, "error": "Blocked by anti-bot (429)"}
+        return {"site": site_name, "Found": False, "error": f"API Error: {response.status_code}"}
+    except (httpx.RequestError, ValueError) as e:
+        return {"site": site_name, "Found": False, "error": f"Error: {type(e).__name__}"}

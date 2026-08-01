@@ -1,32 +1,15 @@
-from playwright.async_api import async_playwright
+import httpx
 
-async def ft_twitter(site_name: str, url: str):
-    async with async_playwright() as pw:
-        browser = await pw.chromium.launch(
-            headless=True,
-            args=["--disable-blink-features=AutomationControlled"]
-        )
-        context = await browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            locale="en-US",
-            viewport={"width": 1920, "height": 1080}
-        )
-        await context.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        page = await context.new_page()
-        try:
-            await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            await page.wait_for_timeout(2000)
-            title = await page.title()
-            current_url = page.url
-            await browser.close()
-
-            if "login" in current_url or "Log in" in title:
-                return {"site": site_name, "Found": False, "error": "Blocked by login wall/Captcha"}
-            elif title == "Profile / X" or title == "X" or "Account suspended" in title:
-                return {"site": site_name, "Found": False, "url": url}
-            else:
-                return {"site": site_name, "Found": True, "url": url}
-
-        except Exception as e:
-            await browser.close()
-            return {"site": site_name, "Found": False, "error": f"Timeout/Error: {str(e)[:40]}"}
+async def ft_twitter(client_name: httpx.AsyncClient, site_name: str, url: str, username: str):
+    api_url = f"https://api.fxtwitter.com/{username}"
+    try:
+        response = await client_name.get(api_url, follow_redirects=False, timeout=15.0)
+        if response.status_code == 200:
+            return {"site": site_name, "Found": True, "url": url}
+        if response.status_code in (301, 302, 404):
+            return {"site": site_name, "Found": False, "url": url}
+        if response.status_code == 429:
+            return {"site": site_name, "Found": False, "error": "Blocked by anti-bot (429)"}
+        return {"site": site_name, "Found": False, "error": f"API Error: {response.status_code}"}
+    except httpx.RequestError as e:
+        return {"site": site_name, "Found": False, "error": f"Error: {type(e).__name__}"}
