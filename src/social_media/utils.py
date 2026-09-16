@@ -1,4 +1,6 @@
-from playwright.async_api import Browser, BrowserContext
+from contextlib import suppress
+
+from playwright.async_api import Browser, BrowserContext, Error
 
 BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -53,13 +55,17 @@ async def get_browser_ua(browser: Browser) -> str:
     if cached:
         return cached
     ua = BROWSER_UA
+    context = None
     try:
         context = await browser.new_context()
         page = await context.new_page()
         ua = (await page.evaluate("navigator.userAgent")).replace("HeadlessChrome", "Chrome")
-        await context.close()
-    except Exception:
+    except Error:
         pass
+    finally:
+        if context is not None:
+            with suppress(Error):
+                await context.close()
     browser._horus_ua = ua
     return ua
 
@@ -70,5 +76,10 @@ async def new_stealth_context(browser: Browser, ignore_https_errors: bool = Fals
         viewport={"width": 1920, "height": 1080},
         ignore_https_errors=ignore_https_errors,
     )
-    await context.add_init_script(STEALTH_JS)
+    try:
+        await context.add_init_script(STEALTH_JS)
+    except BaseException:
+        with suppress(Error):
+            await context.close()
+        raise
     return context

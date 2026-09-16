@@ -1,0 +1,74 @@
+{
+  "Horus.py": {
+    "mtime": 1789567253.3090696,
+    "seen": 1789567253.837028,
+    "ast_hash": "4efc49ece4fbc2668797b8732ed0fa69",
+    "semantic_hash": ""
+  },
+  "main.py": {
+    "mtime": 1789567253.3095794,
+    "seen": 1789567253.8370292,
+    "ast_hash": "a6aa55789db69503c8203302cac3cc3c",
+    "semantic_hash": ""
+  },
+  "sites.json": {
+    "mtime": 1789565457.3146234,
+    "seen": 1789565624.445966,
+    "ast_hash": "7d27d52462e476a633f444743b1f69a0",
+    "semantic_hash": ""
+  },
+  "social_media/__init__.py": {
+    "mtime": 1779442506.0,
+    "seen": 1789563866.576101,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "social_media/utils.py": {
+    "mtime": 1789564393.1314802,
+    "seen": 1789564781.782075,
+    "ast_hash": "e6a040b12a8414f620cd67e1c728cf67",
+    "semantic_hash": ""
+  },
+  "social_media/api.py": {
+    "mtime": 1789564476.665175,
+    "seen": 1789564781.782072,
+    "ast_hash": "e1b49472bfa911ee014e9dba7eec143b",
+    "semantic_hash": ""
+  },
+  "social_media/browser.py": {
+    "mtime": 1789565526.275863,
+    "seen": 1789565624.445986,
+    "ast_hash": "0b559732d7df6d3cc0b06816f0aaabaf",
+    "semantic_hash": ""
+  },
+  "social_media/detection.py": {
+    "mtime": 1789565498.5215583,
+    "seen": 1789565624.445987,
+    "ast_hash": "36f4577e3e1e9bf9545f0f01c80cffd8",
+    "semantic_hash": ""
+  },
+  "tests/test_scraping.py": {
+    "mtime": 1789567179.670206,
+    "seen": 1789567180.218858,
+    "ast_hash": "7642d760cc0b43f57af8f05025e1c107",
+    "semantic_hash": ""
+  },
+  "social_media/social.py": {
+    "mtime": 1789565457.3150108,
+    "seen": 1789565624.445987,
+    "ast_hash": "3e90f1f785e9509fbde20a7ad20f8a06",
+    "semantic_hash": ""
+  },
+  "tests/test_results.py": {
+    "mtime": 1789566942.8504145,
+    "seen": 1789566943.506987,
+    "ast_hash": "d4679cf4c3c82641558b1bdc85d98962",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260916_140839_db942e4b_quel_username_a_le_plus_de_hits_avec_horus_parmi_3.md": {
+    "mtime": 1789567719.0278566,
+    "seen": 1789567815.9605918,
+    "ast_hash": "c2357dafdbf655feef2b055b5e3ec926",
+    "semantic_hash": ""
+  }
+}

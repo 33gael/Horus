@@ -1,47 +1,58 @@
 #!/bin/bash
 
-echo -e "\n[*] Starting Horus installation..."
+set -euo pipefail
 
-if ! command -v python3 &> /dev/null; then
-    echo "[X] Error: Python3 is not installed on this system."
-    exit 1
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV_DIR="$PROJECT_DIR/venv"
+
+echo "[*] Installing Horus in $PROJECT_DIR..."
+
+if command -v uv >/dev/null 2>&1; then
+    echo "[*] Creating Python 3.12 virtual environment..."
+    uv venv --seed --clear --python 3.12 "$VENV_DIR"
+    uv pip install --python "$VENV_DIR/bin/python" -r "$PROJECT_DIR/requirements.txt"
+else
+    PYTHON_BIN="$(command -v python3 || true)"
+    if [ -z "$PYTHON_BIN" ]; then
+        echo "[X] Python 3.10 or newer is required."
+        exit 1
+    fi
+    if ! "$PYTHON_BIN" -c 'import sys; raise SystemExit(sys.version_info < (3, 10))'; then
+        echo "[X] Python 3.10 or newer is required."
+        exit 1
+    fi
+    echo "[*] Creating virtual environment..."
+    "$PYTHON_BIN" -m venv "$VENV_DIR"
+    "$VENV_DIR/bin/python" -m pip install --upgrade pip
+    "$VENV_DIR/bin/python" -m pip install -r "$PROJECT_DIR/requirements.txt"
 fi
 
-echo "[*] Creating virtual environment (venv)..."
-python3 -m venv venv
+echo "[*] Installing Chromium for Playwright..."
+"$VENV_DIR/bin/python" -m playwright install chromium
 
-source venv/bin/activate
+if [ "$(uname -s)" = "Linux" ]; then
+    echo "[*] Installing Chromium system dependencies..."
+    "$VENV_DIR/bin/python" -m playwright install-deps chromium
+fi
 
-echo "[*] Installing required libraries (httpx, playwright, rich, beautifulsoup4)..."
-pip install --upgrade pip --quiet
-pip install httpx playwright rich beautifulsoup4 --quiet
-
-echo "[*] Installing Chromium headless browser..."
-playwright install chromium
-
-PROJECT_DIR=$(pwd)
-
-ALIAS_CMD="alias horus='$PROJECT_DIR/venv/bin/python $PROJECT_DIR/src/main.py'"
-
-if [ -n "$ZSH_VERSION" ] || [ -f ~/.zshrc ]; then
+if [ -f "$HOME/.zshrc" ] || [ "${SHELL##*/}" = "zsh" ]; then
     SHELL_RC="$HOME/.zshrc"
 else
     SHELL_RC="$HOME/.bashrc"
 fi
 
-if grep -q "alias horus=" "$SHELL_RC"; then
-    echo "[!] The 'horus' alias already exists in $SHELL_RC."
-else
-    echo "" >> "$SHELL_RC"
-    echo "# Alias for Horus OSINT" >> "$SHELL_RC"
-    echo "$ALIAS_CMD" >> "$SHELL_RC"
-    echo "[+] Alias 'horus' successfully added to $SHELL_RC!"
-fi
+touch "$SHELL_RC"
 
-source venv/bin/activate
-playwright install-deps chromium
+add_alias() {
+    local name="$1"
+    local command="$2"
+    if ! grep -Eq "^alias ${name}=" "$SHELL_RC"; then
+        printf "alias %s='%s'\n" "$name" "$command" >> "$SHELL_RC"
+    fi
+}
 
-echo -e "\n[+] Installation completed successfully!"
-echo -e "[!] IMPORTANT: To activate the alias immediately in this terminal, run:"
-echo -e "source ~/.zshrc or ~/.bashrc\n"
-echo -e "After doing this, you can launch the tool from anywhere by typing: horus"
+add_alias p "python3"
+add_alias horus "cd $PROJECT_DIR && venv/bin/python src/main.py"
+
+echo "[+] Installation completed successfully."
+echo "[!] Run: source $SHELL_RC"

@@ -1,0 +1,232 @@
+{
+  "communities": {
+    "0": [
+      "horus",
+      "social_media_chess",
+      "social_media_chess_ft_chess",
+      "social_media_chess_py_asyncclient",
+      "social_media_instagram",
+      "social_media_instagram_ft_instagram",
+      "social_media_instagram_py_asyncclient",
+      "social_media_linkedin",
+      "social_media_linkedin_ft_linkedin",
+      "social_media_linkedin_py_asyncclient",
+      "social_media_mixcloud",
+      "social_media_mixcloud_ft_mixcloud",
+      "social_media_mixcloud_py_asyncclient",
+      "social_media_twitch",
+      "social_media_twitch_ft_twitch",
+      "social_media_twitch_py_asyncclient"
+    ],
+    "1": [
+      "console",
+      "horus_py_asyncclient",
+      "horus_site_checker",
+      "horus_site_scanner",
+      "main",
+      "main_get_valid_username",
+      "social_media_playstation_ft_playstation",
+      "social_media_playstation_py_browser",
+      "social_media_reddit_ft_reddit",
+      "social_media_reddit_py_browser"
+    ],
+    "2": [
+      "browsercontext",
+      "social_media_playstation",
+      "social_media_reddit",
+      "social_media_spotify",
+      "social_media_utils",
+      "social_media_utils_get_browser_ua",
+      "social_media_utils_launch_browser",
+      "social_media_utils_new_stealth_context",
+      "social_media_utils_py_browser"
+    ],
+    "3": [
+      "social_media_facebook",
+      "social_media_facebook_ft_facebook",
+      "social_media_facebook_py_browser"
+    ],
+    "4": [
+      "social_media_hackerrank",
+      "social_media_hackerrank_ft_hackerrank",
+      "social_media_hackerrank_py_asyncclient"
+    ],
+    "5": [
+      "social_media_pinterest",
+      "social_media_pinterest_ft_pinterest",
+      "social_media_pinterest_py_asyncclient"
+    ],
+    "6": [
+      "social_media_roblox",
+      "social_media_roblox_ft_roblox",
+      "social_media_roblox_py_asyncclient"
+    ],
+    "7": [
+      "social_media_steam",
+      "social_media_steam_ft_steam",
+      "social_media_steam_py_browser"
+    ],
+    "8": [
+      "social_media_threads",
+      "social_media_threads_ft_threads",
+      "social_media_threads_py_browser"
+    ],
+    "9": [
+      "social_media_tiktok",
+      "social_media_tiktok_ft_tiktok",
+      "social_media_tiktok_py_asyncclient"
+    ],
+    "10": [
+      "social_media_twitter",
+      "social_media_twitter_ft_twitter",
+      "social_media_twitter_py_asyncclient"
+    ],
+    "11": [
+      "social_media_xbox",
+      "social_media_xbox_ft_xbox",
+      "social_media_xbox_py_browser"
+    ],
+    "12": [
+      "social_media_youtube",
+      "social_media_youtube_ft_youtube",
+      "social_media_youtube_py_asyncclient"
+    ],
+    "13": [
+      "social_media_spotify_ft_spotify",
+      "social_media_spotify_py_browser"
+    ],
+    "14": [
+      "social_media_init"
+    ]
+  },
+  "cohesion": {
+    "0": 0.16666666666666666,
+    "1": 0.2,
+    "2": 0.3888888888888889,
+    "3": 0.6666666666666666,
+    "4": 0.6666666666666666,
+    "5": 0.6666666666666666,
+    "6": 0.6666666666666666,
+    "7": 0.6666666666666666,
+    "8": 0.6666666666666666,
+    "9": 0.6666666666666666,
+    "10": 0.6666666666666666,
+    "11": 0.6666666666666666,
+    "12": 0.6666666666666666,
+    "13": 1.0,
+    "14": 1.0
+  },
+  "gods": [
+    {
+      "id": "horus_site_checker",
+      "label": "site_checker()",
+      "degree": 21
+    },
+    {
+      "id": "social_media_utils_new_stealth_context",
+      "label": "new_stealth_context()",
+      "degree": 18
+    },
+    {
+      "id": "social_media_facebook_ft_facebook",
+      "label": "ft_facebook()",
+      "degree": 5
+    },
+    {
+      "id": "social_media_playstation_ft_playstation",
+      "label": "ft_playstation()",
+      "degree": 5
+    },
+    {
+      "id": "social_media_reddit_ft_reddit",
+      "label": "ft_reddit()",
+      "degree": 5
+    },
+    {
+      "id": "social_media_spotify_ft_spotify",
+      "label": "ft_spotify()",
+      "degree": 5
+    },
+    {
+      "id": "social_media_steam_ft_steam",
+      "label": "ft_steam()",
+      "degree": 5
+    },
+    {
+      "id": "social_media_threads_ft_threads",
+      "label": "ft_threads()",
+      "degree": 5
+    },
+    {
+      "id": "social_media_xbox_ft_xbox",
+      "label": "ft_xbox()",
+      "degree": 5
+    },
+    {
+      "id": "horus_site_scanner",
+      "label": "site_scanner()",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "site_checker()",
+      "target": "ft_chess()",
+      "source_files": [
+        "Horus.py",
+        "social_media/Chess.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "site_checker()",
+      "target": "ft_facebook()",
+      "source_files": [
+        "Horus.py",
+        "social_media/Facebook.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "site_checker()",
+      "target": "ft_hackerrank()",
+      "source_files": [
+        "Horus.py",
+        "social_media/Hackerrank.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "site_checker()",
+      "target": "ft_instagram()",
+      "source_files": [
+        "Horus.py",
+        "social_media/Instagram.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "site_checker()",
+      "target": "ft_linkedin()",
+      "source_files": [
+        "Horus.py",
+        "social_media/Linkedin.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}
